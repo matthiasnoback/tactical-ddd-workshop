@@ -1,6 +1,7 @@
 <?php
+declare(strict_types=1);
 
-namespace Test\Unit\Fixtures;
+namespace Test\Unit\Infrastructure\DomainEvents\Fixtures;
 
 use Infrastructure\DomainEvents\DomainEventRecordingCapabilities;
 use Infrastructure\DomainEvents\RecordsDomainEvents;

@@ -1,6 +1,7 @@
 <?php
+declare(strict_types=1);
 
-namespace Test\Unit;
+namespace Test\Unit\Infrastructure\DomainEvents;
 
 use Infrastructure\DomainEvents\DomainEventDispatcher;
 

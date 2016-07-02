@@ -1,8 +1,9 @@
 <?php
+declare(strict_types=1);
 
-namespace Test\Unit;
+namespace Test\Unit\Infrastructure\DomainEvents;
 
-use Test\Unit\Fixtures\EntityTestDouble;
+use Test\Unit\Infrastructure\DomainEvents\Fixtures\EntityTestDouble;
 
 final class DomainEventRecordingCapabilitiesTest extends \PHPUnit_Framework_TestCase
 {

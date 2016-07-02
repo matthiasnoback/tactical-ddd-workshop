@@ -1,9 +1,9 @@
 <?php
+declare(strict_types=1);
 
 namespace Infrastructure\DomainEvents;
 
 use Assert\Assertion;
-use Webmozart\Assert\Assert;
 
 final class DomainEventDispatcher
 {
