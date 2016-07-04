@@ -6,7 +6,7 @@ namespace Domain\Model\User;
 final class User
 {
     /**
-     * @var string
+     * @var UserId
      */
     private $userId;
 
@@ -14,12 +14,13 @@ final class User
      * @var string
      */
     private $name;
+
     /**
      * @var string
      */
     private $emailAddress;
 
-    public function __construct(string $userId, string $name, string $emailAddress)
+    public function __construct(UserId $userId, string $name, string $emailAddress)
     {
         $this->userId = $userId;
         $this->name = $name;
@@ -27,9 +28,9 @@ final class User
     }
 
     /**
-     * @return string
+     * @return UserId
      */
-    public function userId() : string
+    public function userId() : UserId
     {
         return $this->userId;
     }

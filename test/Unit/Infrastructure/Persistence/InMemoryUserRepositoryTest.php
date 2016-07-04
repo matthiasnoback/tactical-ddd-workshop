@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Test\Unit\Infrastructure\Persistence;
 
 use Domain\Model\User\User;
+use Domain\Model\User\UserId;
 use Infrastructure\Persistence\InMemoryUserRepository;
 use Ramsey\Uuid\Uuid;
 
@@ -16,7 +17,7 @@ class InMemoryUserRepositoryTest extends \PHPUnit_Framework_TestCase
     {
         $repository = new InMemoryUserRepository();
 
-        $userId = (string)Uuid::uuid4();
+        $userId = UserId::fromString((string)Uuid::uuid4());
         $user = new User($userId, 'Matthias Noback', 'matthiasnoback@gmail.com');
         $repository->add($user);
 

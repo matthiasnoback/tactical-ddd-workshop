@@ -1,9 +1,10 @@
 <?php
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Test\Unit\Infrastructure\Persistence;
 
 use Domain\Model\MeetupGroup\MeetupGroup;
+use Domain\Model\MeetupGroup\MeetupGroupId;
 use Infrastructure\Persistence\InMemoryMeetupGroupRepository;
 use Ramsey\Uuid\Uuid;
 
@@ -16,7 +17,7 @@ class InMemoryMeetupGroupRepositoryTest extends \PHPUnit_Framework_TestCase
     {
         $repository = new InMemoryMeetupGroupRepository();
 
-        $meetupGroupId = (string)Uuid::uuid4();
+        $meetupGroupId = MeetupGroupId::fromString((string)Uuid::uuid4());
         $meetupGroup = new MeetupGroup($meetupGroupId, 'Ibuildings Events');
         $repository->add($meetupGroup);
 

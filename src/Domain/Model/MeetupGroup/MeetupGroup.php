@@ -3,10 +3,12 @@ declare(strict_types=1);
 
 namespace Domain\Model\MeetupGroup;
 
+use Domain\Model\User\UserId;
+
 final class MeetupGroup
 {
     /**
-     * @var string
+     * @var MeetupGroupId
      */
     private $meetupGroupId;
 
@@ -20,16 +22,16 @@ final class MeetupGroup
      */
     private $memberIds = [];
 
-    public function __construct(string $meetupGroupId, string $name)
+    public function __construct(MeetupGroupId $meetupGroupId, string $name)
     {
         $this->meetupGroupId = $meetupGroupId;
         $this->name = $name;
     }
 
     /**
-     * @return string
+     * @return MeetupGroupId
      */
-    public function meetupGroupId() : string
+    public function meetupGroupId() : MeetupGroupId
     {
         return $this->meetupGroupId;
     }
@@ -42,7 +44,7 @@ final class MeetupGroup
         return $this->name;
     }
 
-    public function addMember($memberId)
+    public function addMember(UserId $memberId)
     {
         $this->memberIds[] = $memberId;
     }

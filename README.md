@@ -52,6 +52,9 @@ Or run the sandbox script:
 - Consistency boundary
 - Transactional consistency
 - Eventual consistency
+
+      When examining the use case (or story), ask whether it's the job of the user executing the use case to make the data consistent.
+
 - Rules of thumb
     - Small aggregates
     - Reference aggregates by identity
@@ -59,7 +62,7 @@ Or run the sandbox script:
 - Implementation
     - Root entity with unique identity
     - Favor value object parts
-    - Use Law of Demeter and Tell, Don't Ask
+    - Use *Law of Demeter* and *Tell, Don't Ask*
     - Optimistic concurrency
     - Avoid dependency injection
 

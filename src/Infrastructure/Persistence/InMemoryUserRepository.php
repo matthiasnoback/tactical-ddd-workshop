@@ -1,9 +1,10 @@
 <?php
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Infrastructure\Persistence;
 
 use Domain\Model\User\User;
+use Domain\Model\User\UserId;
 use Domain\Model\User\UserRepository;
 use Ramsey\Uuid\Uuid;
 
@@ -13,20 +14,20 @@ final class InMemoryUserRepository implements UserRepository
 
     public function add(User $user)
     {
-        $this->users[$user->userId()] = $user;
+        $this->users[(string)$user->userId()] = $user;
     }
 
-    public function getById(string $userId) : User
+    public function getById(UserId $userId) : User
     {
-        if (!isset($this->users[$userId])) {
+        if (!isset($this->users[(string)$userId])) {
             throw new \LogicException(sprintf('User "%s" not found', $userId));
         }
 
-        return $this->users[$userId];
+        return $this->users[(string)$userId];
     }
 
-    public function nextIdentity() : string
+    public function nextIdentity() : UserId
     {
-        return (string) Uuid::uuid4();
+        return UserId::fromString((string)Uuid::uuid4());
     }
 }

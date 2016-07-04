@@ -7,7 +7,7 @@ interface MeetupGroupRepository
 {
     public function add(MeetupGroup $meetupGroup);
 
-    public function getById(string $meetupGroupId) : MeetupGroup;
+    public function getById(MeetupGroupId $meetupGroupId) : MeetupGroup;
 
-    public function nextIdentity() : string;
+    public function nextIdentity() : MeetupGroupId;
 }

@@ -3,6 +3,8 @@
 namespace Test\Unit\Domain\Model;
 
 use Domain\Model\MeetupGroup\MeetupGroup;
+use Domain\Model\MeetupGroup\MeetupGroupId;
+use Domain\Model\User\UserId;
 use Ramsey\Uuid\Uuid;
 
 class MeetupGroupTest extends \PHPUnit_Framework_TestCase
@@ -12,12 +14,12 @@ class MeetupGroupTest extends \PHPUnit_Framework_TestCase
      */
     public function it_has_an_id_and_a_name()
     {
-        $meetupGroupId = (string) Uuid::uuid4();
+        $meetupGroupId = MeetupGroupId::fromString((string)Uuid::uuid4());
         $name = 'Ibuildings Events';
         $meetupGroup = new MeetupGroup($meetupGroupId, $name);
 
         $this->assertSame($name, $meetupGroup->name());
-        $this->assertSame($meetupGroupId, $meetupGroup->meetupGroupId());
+        $this->assertEquals($meetupGroupId, $meetupGroup->meetupGroupId());
     }
 
     /**
@@ -25,10 +27,13 @@ class MeetupGroupTest extends \PHPUnit_Framework_TestCase
      */
     public function it_accepts_new_members()
     {
-        $memberId1 = (string) Uuid::uuid4();
-        $memberId2 = (string) Uuid::uuid4();
+        $memberId1 = UserId::fromString((string)Uuid::uuid4());
+        $memberId2 = UserId::fromString((string)Uuid::uuid4());
 
-        $meetupGroup = new MeetupGroup((string) Uuid::uuid4(), 'Ibuildings Events');
+        $meetupGroup = new MeetupGroup(
+            MeetupGroupId::fromString((string)Uuid::uuid4()),
+            'Ibuildings Events'
+        );
         $meetupGroup->addMember($memberId1);
         $meetupGroup->addMember($memberId2);
 
