@@ -1,0 +1,22 @@
+---
+- name: Add ppa Repository
+  sudo: yes
+  apt_repository: repo=ppa:ondrej/php
+
+- name: Update apt
+  sudo: yes
+  apt: update_cache=yes
+
+- name: Install php7
+  sudo: yes
+  apt: pkg=php7.0 state=latest
+
+- name: Install PHP Packages
+  sudo: yes
+  apt: pkg={{ item }} state=latest
+  with_items: [php7.0-cli, php7.0-mbstring, php7.0-dom, php7.0-bcmath, php7.0-xdebug, php7.0-zip]
+
+- include: configure.yml
+
+- name: Install Composer
+  shell: curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer creates=/usr/local/bin/composer

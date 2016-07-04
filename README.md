@@ -1,4 +1,20 @@
-# Tactical DDD
+# Tactical DDD workshop
+
+## Getting started
+
+You don't need much to run the code in this project: just PHP 7 and composer. This project comes with a set up for Vagrant using Ansible for provisioning, so if you don't want to or can't install these dependencies on your machine, just run:
+
+    vagrant up
+    vagrant ssh
+    cd /vagrant
+
+Run the unit tests:
+
+    vendor/bin/phpunit
+
+Or run the sandbox script:
+
+    php sandbox.php
 
 ## Entities
 

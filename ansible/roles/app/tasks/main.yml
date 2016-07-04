@@ -1,0 +1,4 @@
+---
+
+- name: Install project dependencies
+  shell: composer install chdir=/vagrant

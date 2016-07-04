@@ -1,0 +1,5 @@
+---
+server:
+    timezone: Europe/Amsterdam
+    locale: en_US.UTF-8
+    packages: []

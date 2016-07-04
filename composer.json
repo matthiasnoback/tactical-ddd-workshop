@@ -5,6 +5,7 @@
     "beberlei/assert": "^2.5"
   },
   "require-dev": {
+    "php": "^7.0",
     "phpunit/phpunit": "^5.4"
   },
   "license": "MIT",
