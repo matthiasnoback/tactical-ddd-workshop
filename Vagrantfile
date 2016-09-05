@@ -37,7 +37,7 @@ Vagrant.configure("2") do |config|
 
     config.vm.box = "ubuntu/trusty64"
     
-    config.vm.network :private_network, ip: "192.168.44.55"
+    config.vm.network :private_network, ip: "192.168.44.57"
     config.ssh.forward_agent = true
 
     # If ansible is in your path it will provision from your HOST machine
