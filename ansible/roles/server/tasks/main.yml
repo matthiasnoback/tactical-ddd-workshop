@@ -14,7 +14,7 @@
 - name: Install Extra Packages
   sudo: yes
   apt: pkg={{ item }} state=latest
-  with_items: server.packages
+  with_items: "{{ server.packages }}"
   when: server.packages is defined
 
 - name: Configure the timezone
