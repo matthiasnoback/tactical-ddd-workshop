@@ -1,18 +1,18 @@
 ---
 - name: Add ppa Repository
-  sudo: yes
+  become: yes
   apt_repository: repo=ppa:ondrej/php
 
 - name: Update apt
-  sudo: yes
+  become: yes
   apt: update_cache=yes
 
 - name: Install php7
-  sudo: yes
+  become: yes
   apt: pkg=php7.0 state=latest
 
 - name: Install PHP Packages
-  sudo: yes
+  become: yes
   apt: pkg={{ item }} state=latest
   with_items: [php7.0-cli, php7.0-mbstring, php7.0-dom, php7.0-bcmath, php7.0-xdebug, php7.0-zip]
 
