@@ -16,68 +16,13 @@ Or run the sandbox script:
 
     php sandbox.php
 
-## Entities
+### Setup debugging with XDebug in PHPStorm
 
-- Identity
-    - User provided
-    - Application generated
-    - Persistence mechanism generated
-    - Repository encapsulates identity generation
-    - Surrogate identity
-- Mutability & individuality
-- Validation & consistency
-
-### Checklist
-
-- [ ] Does the object need to be retrieved from a repository by its unique identity?
-- [ ] Does the object need to track changes?
-- [ ] Are two instances equivalent if they have the same identity?
-
-## Value objects
-
-- Characteristics:
-    - Descriptive
-    - Immutable
-    - Often composite, a conceptual whole
-    - Replaceable
-    - Comparable
-    - Side-effect free behaviors
-
-- [ ] Is it irrelevant which exact instance of the object is used?
-- [ ] Can the object be replaced instead of modified?
-- [ ] Are two objects of the same type equal if their properties contain equal values?
-
-## Aggregates
-
-- Consistency boundary
-- Transactional consistency
-- Eventual consistency
-
-      When examining the use case (or story), ask whether it's the job of the user executing the use case to make the data consistent.
-
-- Rules of thumb
-    - Small aggregates
-    - Reference aggregates by identity
-    - Use eventual consistency
-- Implementation
-    - Root entity with unique identity
-    - Favor value object parts
-    - Use *Law of Demeter* and *Tell, Don't Ask*
-    - Optimistic concurrency
-    - Avoid dependency injection
-
-## Repositories
-
-- Collection or persistence oriented
-- Persistence implementations
-    - Unit of Work, changeset calculation
-    - Event-sourcing
-- Reconstitution
-- Querying
-
-## Domain events
-
-- Immutable
-- Relation with commands
-- Authoritative
-- Sufficient data
+- Go to "Preferences" - "PHP".
+- Select PHP language level: 7.
+- Edit the list of available interpreters.
+- Add a "Remote" interpreter.
+- Select "Vagrant".
+- Wait until everything looks okay.
+- Select "OK" to close all dialogs.
+- Set a breakpoint, e.g. in `sandbox.php`, right-click on the file and select "Debug ...".
