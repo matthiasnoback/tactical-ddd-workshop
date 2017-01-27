@@ -7,9 +7,13 @@ use Domain\Model\MeetupGroup\MeetupGroupId;
 use Domain\Model\Rsvp\Rsvp;
 use Domain\Model\Rsvp\RsvpId;
 use Domain\Model\User\UserId;
+use Infrastructure\DomainEvents\DomainEventRecordingCapabilities;
+use Infrastructure\DomainEvents\RecordsDomainEvents;
 
-final class Meetup
+final class Meetup implements RecordsDomainEvents
 {
+    use DomainEventRecordingCapabilities;
+
     /**
      * @var MeetupId
      */
@@ -46,6 +50,8 @@ final class Meetup
         $this->scheduledFor = $scheduledFor;
         $this->organizerId = $organizerId;
         $this->meetupGroupId = $meetupGroupId;
+
+        $this->recordThat(new MeetupScheduled($id, $workingTitle, $scheduledFor, $organizerId, $meetupGroupId));
     }
 
     public static function schedule(
