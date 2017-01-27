@@ -79,4 +79,9 @@ final class Meetup implements RecordsDomainEvents
             $userId
         );
     }
+
+    public function meetupId()
+    {
+        return $this->id;
+    }
 }

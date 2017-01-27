@@ -1,6 +1,8 @@
 <?php
 declare(strict_types = 1);
 
+use Application\Meetup\ScheduleMeetup;
+use Application\Meetup\ScheduleMeetupHandler;
 use Domain\Model\Meetup\Meetup;
 use Domain\Model\Meetup\MeetupId;
 use Domain\Model\Meetup\MeetupScheduled;
@@ -11,6 +13,7 @@ use Domain\Model\User\User;
 use Infrastructure\DomainEvents\DomainEventCliLogger;
 use Infrastructure\DomainEvents\DomainEventDispatcher;
 use Infrastructure\Persistence\InMemoryMeetupGroupRepository;
+use Infrastructure\Persistence\InMemoryMeetupRepository;
 use Infrastructure\Persistence\InMemoryUserRepository;
 use Ramsey\Uuid\Uuid;
 
@@ -54,20 +57,21 @@ $meetupGroup = new MeetupGroup(
 );
 $meetupGroupRepository->add($meetupGroup);
 
-// assignment/01
+$meetupRepository = new InMemoryMeetupRepository();
 
-$meetup = Meetup::schedule(
-    MeetupId::fromString(Uuid::uuid4()->toString()),
-    'PHPBenelux post-workshop social',
-    new \DateTimeImmutable('2017-01-27 12:30'),
-    $user->userId(),
-    $meetupGroup->meetupGroupId()
+$scheduleMeetup = new ScheduleMeetup();
+$scheduleMeetup->meetupGroupId = (string)$meetupGroup->meetupGroupId();
+$scheduleMeetup->meetupId = (string)$meetupRepository->nextIdentity();
+$scheduleMeetup->organizerId = (string)$user->userId();
+$scheduleMeetup->scheduledFor = '2017-01-27 12:30';
+$scheduleMeetup->workingTitle = 'PHPBenelux post-workshop social';
+
+dump($scheduleMeetup);
+
+$scheduleMeetupHandler = new ScheduleMeetupHandler(
+    $userRepository,
+    $meetupGroupRepository,
+    $meetupRepository,
+    $eventDispatcher
 );
-
-debug('Persist meetup');
-
-dump($meetup);
-
-foreach ($meetup->recordedEvents() as $event) {
-    $eventDispatcher->dispatch($event);
-}
+$scheduleMeetupHandler->__invoke($scheduleMeetup);
