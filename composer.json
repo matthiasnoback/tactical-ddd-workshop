@@ -7,7 +7,8 @@
   "require-dev": {
     "php": "^7.0",
     "phpunit/phpunit": "^5.4",
-    "behat/behat": "^3.3"
+    "behat/behat": "^3.3",
+    "symfony/var-dumper": "^3.2"
   },
   "license": "MIT",
   "authors": [

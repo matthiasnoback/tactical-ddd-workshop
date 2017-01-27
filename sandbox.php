@@ -1,6 +1,7 @@
 <?php
 declare(strict_types = 1);
 
+use Domain\Model\Meetup\Meetup;
 use Domain\Model\MeetupGroup\MeetupGroup;
 use Domain\Model\User\User;
 use Infrastructure\DomainEvents\DomainEventCliLogger;
@@ -26,8 +27,20 @@ $userRepository->add($user);
 
 $meetupGroup = new MeetupGroup(
     $meetupGroupRepository->nextIdentity(),
-    'Ibuildings Events'
+    'PHPBenelux meetups'
 );
 $meetupGroupRepository->add($meetupGroup);
 
-$eventDispatcher->dispatch(new DummyDomainEvent());
+// assignment/01
+
+$meetup = Meetup::schedule(
+    \Ramsey\Uuid\Uuid::uuid4(),
+    'PHPBenelux post-workshop social',
+    new \DateTimeImmutable('2017-01-27 12:30'),
+    $user,
+    $meetupGroup
+);
+
+dump($meetup);
+
+//$eventDispatcher->dispatch(new DummyDomainEvent());
