@@ -4,6 +4,8 @@ declare(strict_types = 1);
 namespace Domain\Model\Meetup;
 
 use Domain\Model\MeetupGroup\MeetupGroupId;
+use Domain\Model\Rsvp\Rsvp;
+use Domain\Model\Rsvp\RsvpId;
 use Domain\Model\User\UserId;
 
 final class Meetup
@@ -60,6 +62,15 @@ final class Meetup
             $scheduledFor,
             $organizerId,
             $meetupGroupId
+        );
+    }
+
+    public function rsvpYes(UserId $userId) : Rsvp
+    {
+        return Rsvp::yes(
+            RsvpId::fromString(Uuid::uuid4()->toString()),
+            $this->id,
+            $userId
         );
     }
 }

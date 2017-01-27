@@ -48,11 +48,7 @@ $meetup = Meetup::schedule(
 
 // persist $meetup
 
-$rsvp = Rsvp::yes(
-    RsvpId::fromString(Uuid::uuid4()->toString()),
-    $meetupId,
-    $user->userId()
-);
+$rsvp = $meetup->rsvpYes($user->userId());
 
 // persist $rsvp
 
