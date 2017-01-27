@@ -3,14 +3,13 @@ declare(strict_types = 1);
 
 namespace Domain\Model\Meetup;
 
-use Domain\Model\MeetupGroup\MeetupGroup;
-use Domain\Model\User\User;
-use Ramsey\Uuid\UuidInterface;
+use Domain\Model\MeetupGroup\MeetupGroupId;
+use Domain\Model\User\UserId;
 
 final class Meetup
 {
     /**
-     * @var UuidInterface
+     * @var MeetupId
      */
     private $id;
 
@@ -24,50 +23,43 @@ final class Meetup
      */
     private $scheduledFor;
     /**
-     * @var User
+     * @var UserId
      */
-    private $organizer;
+    private $organizerId;
 
     /**
-     * @var MeetupGroup
+     * @var MeetupGroupId
      */
-    private $meetupGroup;
-
-    /**
-     * @var Rsvp[]
-     */
-    private $rsvps = [];
+    private $meetupGroupId;
 
     private function __construct(
-        UuidInterface $id,
+        MeetupId $id,
         string $workingTitle,
         \DateTimeImmutable $scheduledFor,
-        User $organizer,
-        MeetupGroup $meetupGroup
+        UserId $organizerId,
+        MeetupGroupId $meetupGroupId
     ) {
         $this->id = $id;
         $this->workingTitle = $workingTitle;
         $this->scheduledFor = $scheduledFor;
-        $this->organizer = $organizer;
-        $this->meetupGroup = $meetupGroup;
-
-        $this->rsvps[] = Rsvp::yes($organizer);
+        $this->organizerId = $organizerId;
+        $this->meetupGroupId = $meetupGroupId;
     }
 
     public static function schedule(
-        UuidInterface $id,
+        MeetupId $id,
         string $workingTitle,
         \DateTimeImmutable $scheduledFor,
-        User $organizer,
-        MeetupGroup $meetupGroup
+        UserId $organizerId,
+        MeetupGroupId $meetupGroupId
     ) : Meetup
     {
         return new self(
             $id,
             $workingTitle,
             $scheduledFor,
-            $organizer,
-            $meetupGroup
+            $organizerId,
+            $meetupGroupId
         );
     }
 }
