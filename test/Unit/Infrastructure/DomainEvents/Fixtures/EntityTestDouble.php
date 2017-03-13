@@ -3,12 +3,12 @@ declare(strict_types=1);
 
 namespace Test\Unit\Infrastructure\DomainEvents\Fixtures;
 
-use Infrastructure\DomainEvents\DomainEventRecordingCapabilities;
-use Infrastructure\DomainEvents\RecordsDomainEvents;
+use Common\DomainModel\AggregateRoot;
+use Common\DomainModel\RecordsDomainEvents;
 
 final class EntityTestDouble implements RecordsDomainEvents
 {
-    use DomainEventRecordingCapabilities;
+    use AggregateRoot;
 
     public function doSomething($associatedEvent)
     {

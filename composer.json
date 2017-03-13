@@ -2,7 +2,7 @@
     "require": {
         "ramsey/uuid": "^3.4",
         "beberlei/assert": "^2.5",
-        "matthiasnoback/php-workshop-tools": "^0.1.0"
+        "matthiasnoback/php-workshop-tools": "^0.2"
     },
     "require-dev": {
         "php": "^7.0",
