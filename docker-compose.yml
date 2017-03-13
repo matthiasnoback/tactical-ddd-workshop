@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+    devtools:
+        build: docker/devtools/
+        image: matthiasnoback/tactical-ddd-workshop-devtools
+        volumes:
+            - ./:/opt
+            - ${COMPOSER_HOME}:/home/.composer
+        environment:
+            COMPOSER_HOME: /home/.composer
+            XDEBUG_CONFIG: "remote_host=${DOCKER_HOST_IP}"
+            PHP_IDE_CONFIG: "serverName=docker"
+        user: ${HOST_UID}:${HOST_GID}

@@ -1,29 +1,29 @@
 {
-  "name": "ibuildingsnl/tactical-ddd-workshop-code",
-  "require": {
-    "ramsey/uuid": "^3.4",
-    "beberlei/assert": "^2.5"
-  },
-  "require-dev": {
-    "php": "^7.0",
-    "phpunit/phpunit": "^5.4",
-    "behat/behat": "^3.3"
-  },
-  "license": "MIT",
-  "authors": [
-    {
-      "name": "Matthias Noback",
-      "email": "matthiasnoback@gmail.com"
+    "require": {
+        "ramsey/uuid": "^3.4",
+        "beberlei/assert": "^2.5",
+        "matthiasnoback/php-workshop-tools": "^0.1.0"
+    },
+    "require-dev": {
+        "php": "^7.0",
+        "phpunit/phpunit": "^5.4",
+        "behat/behat": "^3.3"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Matthias Noback",
+            "email": "matthiasnoback@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Test\\": "test/"
+        }
     }
-  ],
-  "autoload": {
-    "psr-4": {
-      "": "src/"
-    }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "Test\\": "test/"
-    }
-  }
 }

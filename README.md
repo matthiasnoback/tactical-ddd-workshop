@@ -2,27 +2,12 @@
 
 ## Getting started
 
-You don't need much to run the code in this project: just PHP 7 and composer. This project comes with a set up for Vagrant using Ansible for provisioning, so if you don't want to or can't install these dependencies on your machine, just run:
+- Run `docker-compose pull`.
+- Run `bin/composer.sh install --prefer-dist` to install the project's dependencies.
+- [Follow the instructions](https://github.com/matthiasnoback/php-workshop-tools/blob/master/README.md) about setting environment variables and configuring PhpStorm for debugging.
 
-    vagrant up
-    vagrant ssh
-    cd /vagrant
+## Running development tools
 
-Run the unit tests:
-
-    vendor/bin/phpunit
-
-Or run the sandbox script:
-
-    php sandbox.php
-
-### Setup debugging with XDebug in PHPStorm
-
-- Go to "Preferences" - "PHP".
-- Select PHP language level: 7.
-- Edit the list of available interpreters.
-- Add a "Remote" interpreter.
-- Select "Vagrant".
-- Wait until everything looks okay.
-- Select "OK" to close all dialogs.
-- Set a breakpoint, e.g. in `sandbox.php`, right-click on the file and select "Debug ...".
+- Run `bin/composer.sh` to run Composer (e.g. `bin/composer.sh install --prefer-dist`).
+- Run `bin/run_tests.sh` to run the tests.
+- Run `bin/sandbox.sh` to run the `sandbox.php` script.
