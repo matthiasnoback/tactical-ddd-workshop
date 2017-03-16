@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "72846e3853934f095846dd5a83286ced",
+    "content-hash": "9d03137c77958d47c328a783427b4af3",
     "packages": [
         {
             "name": "beberlei/assert",
-            "version": "v2.7.3",
+            "version": "v2.7.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/beberlei/assert.git",
-                "reference": "5972776d6a9eedfd3c55216341434e19cb50418f"
+                "reference": "3ee3bc468a3ce4bbfc3d74f53c6cdb5242d39d1a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/beberlei/assert/zipball/5972776d6a9eedfd3c55216341434e19cb50418f",
-                "reference": "5972776d6a9eedfd3c55216341434e19cb50418f",
+                "url": "https://api.github.com/repos/beberlei/assert/zipball/3ee3bc468a3ce4bbfc3d74f53c6cdb5242d39d1a",
+                "reference": "3ee3bc468a3ce4bbfc3d74f53c6cdb5242d39d1a",
                 "shasum": ""
             },
             "require": {
@@ -25,8 +25,8 @@
                 "php": ">=5.3"
             },
             "require-dev": {
-                "friendsofphp/php-cs-fixer": "^2.0",
-                "phpunit/phpunit": "@stable"
+                "friendsofphp/php-cs-fixer": "^2.1.1",
+                "phpunit/phpunit": "^4|^5"
             },
             "type": "library",
             "autoload": {
@@ -59,20 +59,20 @@
                 "assertion",
                 "validation"
             ],
-            "time": "2017-01-24T15:14:39+00:00"
+            "time": "2017-03-14T18:06:52+00:00"
         },
         {
             "name": "matthiasnoback/naive-serializer",
-            "version": "v0.3.0",
+            "version": "v0.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/matthiasnoback/naive-serializer.git",
-                "reference": "57725e623b6028afb7ba5c8d27700c55510abc12"
+                "reference": "005edb28adae5ffe3e50352a611ad0008863d4dc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/matthiasnoback/naive-serializer/zipball/57725e623b6028afb7ba5c8d27700c55510abc12",
-                "reference": "57725e623b6028afb7ba5c8d27700c55510abc12",
+                "url": "https://api.github.com/repos/matthiasnoback/naive-serializer/zipball/005edb28adae5ffe3e50352a611ad0008863d4dc",
+                "reference": "005edb28adae5ffe3e50352a611ad0008863d4dc",
                 "shasum": ""
             },
             "require": {
@@ -99,25 +99,25 @@
                     "email": "matthiasnoback@gmail.com"
                 }
             ],
-            "time": "2017-02-12T21:08:16+00:00"
+            "time": "2017-02-13T19:13:11+00:00"
         },
         {
             "name": "matthiasnoback/php-workshop-tools",
-            "version": "v0.2.0",
+            "version": "v0.3.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/matthiasnoback/php-workshop-tools.git",
-                "reference": "2ebecf4bc86049ffb26bdb4c9240805a74a515cd"
+                "reference": "2e9900fe65b74abb96c10ccfbcd34580174e30ca"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/matthiasnoback/php-workshop-tools/zipball/2ebecf4bc86049ffb26bdb4c9240805a74a515cd",
-                "reference": "2ebecf4bc86049ffb26bdb4c9240805a74a515cd",
+                "url": "https://api.github.com/repos/matthiasnoback/php-workshop-tools/zipball/2e9900fe65b74abb96c10ccfbcd34580174e30ca",
+                "reference": "2e9900fe65b74abb96c10ccfbcd34580174e30ca",
                 "shasum": ""
             },
             "require": {
                 "beberlei/assert": "^2.7",
-                "matthiasnoback/naive-serializer": "^0.3.0",
+                "matthiasnoback/naive-serializer": "^0.4",
                 "php": "^7.1",
                 "ramsey/uuid": "^3.4",
                 "symfony/var-dumper": "^3.2"
@@ -145,7 +145,7 @@
                     "email": "matthiasnoback@gmail.com"
                 }
             ],
-            "time": "2017-03-13T19:46:40+00:00"
+            "time": "2017-03-16T12:44:40+00:00"
         },
         {
             "name": "paragonie/random_compat",
@@ -1222,16 +1222,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "5.7.15",
+            "version": "5.7.16",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "b99112aecc01f62acf3d81a3f59646700a1849e5"
+                "reference": "dafc78e2a7d12139b0e97078d1082326bd09363d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/b99112aecc01f62acf3d81a3f59646700a1849e5",
-                "reference": "b99112aecc01f62acf3d81a3f59646700a1849e5",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/dafc78e2a7d12139b0e97078d1082326bd09363d",
+                "reference": "dafc78e2a7d12139b0e97078d1082326bd09363d",
                 "shasum": ""
             },
             "require": {
@@ -1300,7 +1300,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2017-03-02T15:22:43+00:00"
+            "time": "2017-03-15T13:02:34+00:00"
         },
         {
             "name": "phpunit/phpunit-mock-objects",

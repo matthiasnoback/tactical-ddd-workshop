@@ -2,8 +2,9 @@
 
 namespace Domain\Model\User;
 
-use Domain\Model\Common\AggregateRootId;
+use Common\DomainModel\AggregateId;
 
-final class UserId extends AggregateRootId
+final class UserId
 {
+    use AggregateId;
 }

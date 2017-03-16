@@ -2,8 +2,9 @@
 
 namespace Domain\Model\MeetupGroup;
 
-use Domain\Model\Common\AggregateRootId;
+use Common\DomainModel\AggregateId;
 
-final class MeetupGroupId extends AggregateRootId
+final class MeetupGroupId
 {
+    use AggregateId;
 }
