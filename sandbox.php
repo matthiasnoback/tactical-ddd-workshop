@@ -2,6 +2,7 @@
 declare(strict_types = 1);
 
 use Application\OrganizerRsvpYesWhenMeetupScheduled;
+use Application\RsvpYesHandler;
 use Common\EventDispatcher\EventCliLogger;
 use Common\EventDispatcher\EventDispatcher;
 use Domain\Model\Meetup\MeetupId;
@@ -33,9 +34,10 @@ $meetupGroup = new MeetupGroup(
 );
 $meetupGroupRepository->add($meetupGroup);
 
+$rsvpYesHandler = new RsvpYesHandler();
 $eventDispatcher->registerSubscriber(
     MeetupScheduled::class,
-    new OrganizerRsvpYesWhenMeetupScheduled()
+    new OrganizerRsvpYesWhenMeetupScheduled($rsvpYesHandler)
 );
 $meetup = \Domain\Model\Meetup\Meetup::schedule(
     MeetupId::fromString((string)Uuid::uuid4()),

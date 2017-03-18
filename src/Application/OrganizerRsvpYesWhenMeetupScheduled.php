@@ -4,19 +4,24 @@ declare(strict_types = 1);
 namespace Application;
 
 use Domain\Model\Meetup\MeetupScheduled;
-use Domain\Model\Rsvp\Rsvp;
-use Domain\Model\Rsvp\RsvpId;
 use Ramsey\Uuid\Uuid;
 
 final class OrganizerRsvpYesWhenMeetupScheduled
 {
-    public function __invoke(MeetupScheduled $event)
+    private $rsvpYesHandler;
+
+    public function __construct(RsvpYesHandler $rsvpYesHandler)
     {
-        $rsvpId = RsvpId::fromString((string)Uuid::uuid4());
-        $rsvp = Rsvp::yes($rsvpId, $event->meetupId(), $event->organizerId());
+        $this->rsvpYesHandler = $rsvpYesHandler;
+    }
 
-        dump($rsvp);
+    public function __invoke(MeetupScheduled $event): void
+    {
+        $rsvpYes = new RsvpYes();
+        $rsvpYes->userId = (string)$event->organizerId();
+        $rsvpYes->meetupId = (string)$event->meetupId();
+        $rsvpYes->rsvpId = (string)Uuid::uuid4();
 
-        // TODO persist $rsvp
+        $this->rsvpYesHandler->handle($rsvpYes);
     }
 }
