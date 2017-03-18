@@ -3,7 +3,9 @@ declare(strict_types = 1);
 
 namespace Domain\Model\Meetup;
 
+use Domain\Model\MeetupGroup\MeetupGroupId;
 use Domain\Model\User\User;
+use Domain\Model\User\UserId;
 
 final class Meetup
 {
@@ -11,6 +13,11 @@ final class Meetup
      * @var MeetupId
      */
     private $meetupId;
+
+    /**
+     * @var MeetupGroupId
+     */
+    private $meetupGroupId;
 
     /**
      * @var User
@@ -27,38 +34,38 @@ final class Meetup
      */
     private $scheduledFor;
 
-    /**
-     * @var Rsvp[]
-     */
-    private $rsvps = [];
-
-    private function __construct(MeetupId $meetupId, User $organizer, string $workingTitle, \DateTimeImmutable $scheduledFor)
-    {
+    private function __construct(
+        MeetupId $meetupId,
+        MeetupGroupId $meetupGroupId,
+        UserId $organizer,
+        string $workingTitle,
+        \DateTimeImmutable $scheduledFor
+    ) {
+        $this->meetupId = $meetupId;
+        $this->meetupGroupId = $meetupGroupId;
         $this->organizer = $organizer;
         $this->workingTitle = $workingTitle;
         $this->scheduledFor = $scheduledFor;
-        $this->meetupId = $meetupId;
-
-        $this->rsvpYes($organizer);
     }
 
-    public static function schedule(MeetupId $meetupId, User $organizer, string $workingTitle, \DateTimeImmutable $scheduledFor): Meetup
-    {
+    public static function schedule(
+        MeetupId $meetupId,
+        MeetupGroupId $meetupGroupId,
+        UserId $organizer,
+        string $workingTitle,
+        \DateTimeImmutable $scheduledFor
+    ): Meetup {
         return new self(
             $meetupId,
+            $meetupGroupId,
             $organizer,
             $workingTitle,
             $scheduledFor
         );
     }
 
-    public function rsvpYes(User $user)
+    public function meetupId()
     {
-        $this->rsvps[] = Rsvp::yes($user);
-    }
-
-    public function rsvpNo(User $user)
-    {
-        $this->rsvps[] = Rsvp::no($user);
+        return $this->meetupId;
     }
 }

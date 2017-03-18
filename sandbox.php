@@ -5,6 +5,8 @@ use Common\EventDispatcher\EventCliLogger;
 use Common\EventDispatcher\EventDispatcher;
 use Domain\Model\Meetup\MeetupId;
 use Domain\Model\MeetupGroup\MeetupGroup;
+use Domain\Model\Rsvp\Rsvp;
+use Domain\Model\Rsvp\RsvpId;
 use Domain\Model\User\User;
 use Infrastructure\DomainEvents\Fixtures\DummyDomainEvent;
 use Infrastructure\Persistence\InMemoryMeetupGroupRepository;
@@ -34,11 +36,17 @@ $meetupGroupRepository->add($meetupGroup);
 
 $meetup = \Domain\Model\Meetup\Meetup::schedule(
     MeetupId::fromString((string)Uuid::uuid4()),
-    $user,
+    $meetupGroup->meetupGroupId(),
+    $user->userId(),
     'Lunchmeeting bij Het Broodlokaal',
     new \DateTimeImmutable('12:30')
 );
 
+$rsvpId = RsvpId::fromString((string)Uuid::uuid4());
+$rsvp = Rsvp::yes($rsvpId, $meetup->meetupId(), $user->userId());
+$rsvp->changeToNo();
+
 dump($meetup);
+dump($rsvp);
 
 //$eventDispatcher->dispatch(new DummyDomainEvent());
