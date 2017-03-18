@@ -3,12 +3,15 @@ declare(strict_types = 1);
 
 namespace Domain\Model\Meetup;
 
+use Common\DomainModel\AggregateRoot;
 use Domain\Model\MeetupGroup\MeetupGroupId;
 use Domain\Model\User\User;
 use Domain\Model\User\UserId;
 
 final class Meetup
 {
+    use AggregateRoot;
+
     /**
      * @var MeetupId
      */
@@ -46,6 +49,14 @@ final class Meetup
         $this->organizer = $organizer;
         $this->workingTitle = $workingTitle;
         $this->scheduledFor = $scheduledFor;
+
+        $this->recordThat(new MeetupScheduled(
+            $meetupId,
+            $meetupGroupId,
+            $organizer,
+            $workingTitle,
+            $scheduledFor
+        ));
     }
 
     public static function schedule(
@@ -62,10 +73,5 @@ final class Meetup
             $workingTitle,
             $scheduledFor
         );
-    }
-
-    public function meetupId()
-    {
-        return $this->meetupId;
     }
 }

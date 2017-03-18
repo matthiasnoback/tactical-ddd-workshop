@@ -1,14 +1,13 @@
 <?php
 declare(strict_types = 1);
 
+use Application\OrganizerRsvpYesWhenMeetupScheduled;
 use Common\EventDispatcher\EventCliLogger;
 use Common\EventDispatcher\EventDispatcher;
 use Domain\Model\Meetup\MeetupId;
+use Domain\Model\Meetup\MeetupScheduled;
 use Domain\Model\MeetupGroup\MeetupGroup;
-use Domain\Model\Rsvp\Rsvp;
-use Domain\Model\Rsvp\RsvpId;
 use Domain\Model\User\User;
-use Infrastructure\DomainEvents\Fixtures\DummyDomainEvent;
 use Infrastructure\Persistence\InMemoryMeetupGroupRepository;
 use Infrastructure\Persistence\InMemoryUserRepository;
 use Ramsey\Uuid\Uuid;
@@ -34,6 +33,10 @@ $meetupGroup = new MeetupGroup(
 );
 $meetupGroupRepository->add($meetupGroup);
 
+$eventDispatcher->registerSubscriber(
+    MeetupScheduled::class,
+    new OrganizerRsvpYesWhenMeetupScheduled()
+);
 $meetup = \Domain\Model\Meetup\Meetup::schedule(
     MeetupId::fromString((string)Uuid::uuid4()),
     $meetupGroup->meetupGroupId(),
@@ -41,12 +44,9 @@ $meetup = \Domain\Model\Meetup\Meetup::schedule(
     'Lunchmeeting bij Het Broodlokaal',
     new \DateTimeImmutable('12:30')
 );
-
-$rsvpId = RsvpId::fromString((string)Uuid::uuid4());
-$rsvp = Rsvp::yes($rsvpId, $meetup->meetupId(), $user->userId());
-$rsvp->changeToNo();
+foreach ($meetup->recordedEvents() as $event) {
+    $eventDispatcher->dispatch($event);
+}
+$meetup->clearEvents();
 
 dump($meetup);
-dump($rsvp);
-
-//$eventDispatcher->dispatch(new DummyDomainEvent());
