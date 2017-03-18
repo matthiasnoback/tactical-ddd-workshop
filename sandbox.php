@@ -3,11 +3,13 @@ declare(strict_types = 1);
 
 use Common\EventDispatcher\EventCliLogger;
 use Common\EventDispatcher\EventDispatcher;
+use Domain\Model\Meetup\MeetupId;
 use Domain\Model\MeetupGroup\MeetupGroup;
 use Domain\Model\User\User;
 use Infrastructure\DomainEvents\Fixtures\DummyDomainEvent;
 use Infrastructure\Persistence\InMemoryMeetupGroupRepository;
 use Infrastructure\Persistence\InMemoryUserRepository;
+use Ramsey\Uuid\Uuid;
 
 require __DIR__ . '/vendor/autoload.php';
 
@@ -30,4 +32,13 @@ $meetupGroup = new MeetupGroup(
 );
 $meetupGroupRepository->add($meetupGroup);
 
-$eventDispatcher->dispatch(new DummyDomainEvent());
+$meetup = \Domain\Model\Meetup\Meetup::schedule(
+    MeetupId::fromString((string)Uuid::uuid4()),
+    $user,
+    'Lunchmeeting bij Het Broodlokaal',
+    new \DateTimeImmutable('12:30')
+);
+
+dump($meetup);
+
+//$eventDispatcher->dispatch(new DummyDomainEvent());
