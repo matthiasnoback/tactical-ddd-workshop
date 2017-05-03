@@ -1,10 +1,11 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
 
 use Common\EventDispatcher\EventCliLogger;
 use Common\EventDispatcher\EventDispatcher;
 use MeetupOrganizing\Domain\Model\Meetup\Meetup;
 use MeetupOrganizing\Domain\Model\Meetup\MeetupId;
+use MeetupOrganizing\Domain\Model\Meetup\MeetupScheduled;
 use MeetupOrganizing\Domain\Model\Meetup\ScheduledDate;
 use MeetupOrganizing\Domain\Model\Rsvp\RsvpId;
 use MeetupOrganizing\Infrastructure\Membership\RemoteUserIdFactory;
@@ -59,10 +60,13 @@ $meetup = Meetup::schedule(
 );
 dump($meetup);
 
-// Somehow link these two (eventual consistency!)
-$attendeeId = $userIdFactory->createAttendeeId($userIdInSession);
-$rsvpId = RsvpId::fromString($userIdInSession);
-$rsvp = Rsvp::yes($rsvpId, $meetupId, $attendeeId);
-dump($rsvp);
+$eventDispatcher->registerSubscriber(MeetupScheduled::class, function (MeetupScheduled $event) use ($userIdInSession, $userIdFactory) {
+    $attendeeId = $userIdFactory->createAttendeeId((string)$event->organizerId());
+    $rsvpId = RsvpId::fromString($userIdInSession);
+    $rsvp = Rsvp::yes($rsvpId, $event->meetupId(), $attendeeId);
+    dump($rsvp);
+});
 
-//$eventDispatcher->dispatch(new DummyDomainEvent());
+foreach ($meetup->recordedEvents() as $event) {
+    $eventDispatcher->dispatch($event);
+}
