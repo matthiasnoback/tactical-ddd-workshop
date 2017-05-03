@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 use Common\EventDispatcher\EventCliLogger;
 use Common\EventDispatcher\EventDispatcher;
+use MeetupOrganizing\Application\RsvpYesForOrganizerWhenMeetupScheduled;
 use MeetupOrganizing\Domain\Model\Meetup\Meetup;
 use MeetupOrganizing\Domain\Model\Meetup\MeetupId;
 use MeetupOrganizing\Domain\Model\Meetup\MeetupScheduled;
@@ -58,14 +59,12 @@ $meetup = Meetup::schedule(
     new WorkingTitle('May Meetup'),
     ScheduledDate::fromDateTime(new \DateTimeImmutable('2017-05-05 19:00'))
 );
-dump($meetup);
+dump($meetup); // i.e. persist
 
-$eventDispatcher->registerSubscriber(MeetupScheduled::class, function (MeetupScheduled $event) use ($userIdInSession, $userIdFactory) {
-    $attendeeId = $userIdFactory->createAttendeeId((string)$event->organizerId());
-    $rsvpId = RsvpId::fromString((string)Uuid::uuid4());
-    $rsvp = Rsvp::yes($rsvpId, $event->meetupId(), $attendeeId);
-    dump($rsvp);
-});
+$eventDispatcher->registerSubscriber(
+    MeetupScheduled::class,
+    new RsvpYesForOrganizerWhenMeetupScheduled($userIdFactory)
+);
 
 foreach ($meetup->recordedEvents() as $event) {
     $eventDispatcher->dispatch($event);
