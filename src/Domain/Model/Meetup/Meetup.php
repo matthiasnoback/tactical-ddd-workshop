@@ -5,8 +5,6 @@ namespace Domain\Model\Meetup;
 
 use Domain\Model\MeetupGroup\MeetupGroup;
 use Domain\Model\MeetupGroup\MeetupGroupId;
-use Domain\Model\User\User;
-use Domain\Model\User\UserId;
 
 final class Meetup
 {
@@ -21,7 +19,7 @@ final class Meetup
     private $meetupGroupId;
 
     /**
-     * @var User
+     * @var OrganizerId
      */
     private $organizerId;
 
@@ -40,7 +38,7 @@ final class Meetup
     private function __construct(
         MeetupId $meetupId,
         MeetupGroupId $meetupGroupId,
-        UserId $organizerId,
+        OrganizerId $organizerId,
         WorkingTitle $workingTitle,
         ScheduledDate $scheduledFor
     ) {
@@ -50,13 +48,13 @@ final class Meetup
         $this->scheduledFor = $scheduledFor;
         $this->meetupId = $meetupId;
 
-        $this->rsvps[(string)$this->organizerId] = Rsvp::yes($this->organizerId);
+        $this->rsvps[(string)$this->organizerId] = Rsvp::yes($this->organizerId->asUserId());
     }
 
     public static function schedule(
         MeetupId $meetupId,
         MeetupGroupId $meetupGroupId,
-        UserId $organizerId,
+        OrganizerId $organizerId,
         WorkingTitle $workingTitle,
         ScheduledDate $scheduledFor
     ): Meetup {
