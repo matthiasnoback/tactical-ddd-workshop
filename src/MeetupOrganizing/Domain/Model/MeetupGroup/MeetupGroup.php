@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace Domain\Model\MeetupGroup;
+namespace MeetupOrganizing\Domain\Model\MeetupGroup;
 
-use Domain\Model\User\UserId;
+use Membership\Domain\Model\User\UserId;
 
 final class MeetupGroup
 {

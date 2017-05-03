@@ -1,10 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace Domain\Model\Rsvp;
+namespace MeetupOrganizing\Domain\Model\Rsvp;
 
-use Domain\Model\Meetup\MeetupId;
-use Domain\Model\User\UserId;
+use MeetupOrganizing\Domain\Model\Meetup\MeetupId;
 
 final class Rsvp
 {
@@ -22,35 +21,37 @@ final class Rsvp
     private $meetupId;
 
     /**
-     * @var UserId
+     * @var AttendeeId
      */
-    private $userId;
-    
+    private $attendeeId;
+
     /**
      * @var string
      */
     private $answer;
 
     /**
-     * @param UserId $userId
+     * @param RsvpId $rsvpId
+     * @param MeetupId $meetupId
+     * @param AttendeeId $attendeeId
      * @param string $answer
      */
-    private function __construct(RsvpId $rsvpId, MeetupId $meetupId, UserId $userId, $answer)
+    private function __construct(RsvpId $rsvpId, MeetupId $meetupId, AttendeeId $attendeeId, $answer)
     {
-        $this->userId = $userId;
+        $this->attendeeId = $attendeeId;
         $this->answer = $answer;
         $this->rsvpId = $rsvpId;
         $this->meetupId = $meetupId;
     }
 
-    public static function yes(RsvpId $rsvpId, MeetupId $meetupId, UserId $userId)
+    public static function yes(RsvpId $rsvpId, MeetupId $meetupId, AttendeeId $attendeeId)
     {
-        return new self($rsvpId, $meetupId, $userId, self::YES);
+        return new self($rsvpId, $meetupId, $attendeeId, self::YES);
     }
 
-    public static function no(RsvpId $rsvpId, MeetupId $meetupId, UserId $userId)
+    public static function no(RsvpId $rsvpId, MeetupId $meetupId, AttendeeId $attendeeId)
     {
-        return new self($rsvpId, $meetupId, $userId, self::NO);
+        return new self($rsvpId, $meetupId, $attendeeId, self::NO);
     }
 
     public function changeToNo(): void

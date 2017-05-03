@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace Domain\Model\Meetup;
+namespace MeetupOrganizing\Domain\Model\Meetup;
 
 use Common\DomainModel\AggregateId;
-use Domain\Model\User\UserId;
+use Membership\Domain\Model\User\UserId;
 
 final class OrganizerId
 {

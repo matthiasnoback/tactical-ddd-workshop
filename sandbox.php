@@ -3,17 +3,18 @@ declare(strict_types = 1);
 
 use Common\EventDispatcher\EventCliLogger;
 use Common\EventDispatcher\EventDispatcher;
-use Domain\Model\Meetup\Meetup;
-use Domain\Model\Meetup\MeetupId;
-use Domain\Model\Meetup\ScheduledDate;
-use Domain\Model\Meetup\UserIdFactory;
-use Domain\Model\Meetup\WorkingTitle;
-use Domain\Model\MeetupGroup\MeetupGroup;
-use Domain\Model\Rsvp\Rsvp;
-use Domain\Model\User\User;
+use MeetupOrganizing\Domain\Model\Meetup\Meetup;
+use MeetupOrganizing\Domain\Model\Meetup\MeetupId;
+use MeetupOrganizing\Domain\Model\Meetup\ScheduledDate;
+use MeetupOrganizing\Domain\Model\Rsvp\RsvpId;
+use MeetupOrganizing\Infrastructure\Membership\RemoteUserIdFactory;
+use MeetupOrganizing\Domain\Model\Meetup\WorkingTitle;
+use MeetupOrganizing\Domain\Model\MeetupGroup\MeetupGroup;
+use MeetupOrganizing\Domain\Model\Rsvp\Rsvp;
+use Membership\Domain\Model\User\User;
 use Infrastructure\DomainEvents\Fixtures\DummyDomainEvent;
-use Infrastructure\Persistence\InMemoryMeetupGroupRepository;
-use Infrastructure\Persistence\InMemoryUserRepository;
+use MeetupOrganizing\Infrastructure\Persistence\InMemoryMeetupGroupRepository;
+use Membership\Infrastructure\Persistence\InMemoryUserRepository;
 use Ramsey\Uuid\Uuid;
 
 require __DIR__ . '/vendor/autoload.php';
@@ -37,14 +38,16 @@ $userRepository->add($user);
 /*
  * In the "Meetup Organizing" context
  */
+$userIdInSession = (string)$user->userId();
+
 $meetupGroup = new MeetupGroup(
     $meetupGroupRepository->nextIdentity(),
     'Akeneo Meetups'
 );
 $meetupGroupRepository->add($meetupGroup);
 
-$userIdFactory = new UserIdFactory();
-$organizerId = $userIdFactory->createOrganizerId((string)$user->userId());
+$userIdFactory = new RemoteUserIdFactory();
+$organizerId = $userIdFactory->createOrganizerId($userIdInSession);
 
 $meetupId = MeetupId::fromString((string)Uuid::uuid4());
 $meetup = Meetup::schedule(
@@ -57,8 +60,9 @@ $meetup = Meetup::schedule(
 dump($meetup);
 
 // Somehow link these two (eventual consistency!)
-$rsvpId = \Domain\Model\Rsvp\RsvpId::fromString((string)Uuid::uuid4());
-$rsvp = Rsvp::yes($rsvpId, $meetupId, $organizerId->asUserId());
+$attendeeId = $userIdFactory->createAttendeeId($userIdInSession);
+$rsvpId = RsvpId::fromString($userIdInSession);
+$rsvp = Rsvp::yes($rsvpId, $meetupId, $attendeeId);
 dump($rsvp);
 
 //$eventDispatcher->dispatch(new DummyDomainEvent());

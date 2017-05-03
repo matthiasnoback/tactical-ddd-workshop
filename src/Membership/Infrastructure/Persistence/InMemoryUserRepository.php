@@ -1,11 +1,11 @@
 <?php
 declare(strict_types = 1);
 
-namespace Infrastructure\Persistence;
+namespace Membership\Infrastructure\Persistence;
 
-use Domain\Model\User\User;
-use Domain\Model\User\UserId;
-use Domain\Model\User\UserRepository;
+use Membership\Domain\Model\User\User;
+use Membership\Domain\Model\User\UserId;
+use Membership\Domain\Model\User\UserRepository;
 use Ramsey\Uuid\Uuid;
 
 final class InMemoryUserRepository implements UserRepository

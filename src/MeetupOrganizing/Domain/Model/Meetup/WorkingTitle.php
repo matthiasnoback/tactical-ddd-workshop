@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Domain\Model\Meetup;
+namespace MeetupOrganizing\Domain\Model\Meetup;
 
 final class WorkingTitle
 {

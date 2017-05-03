@@ -3,9 +3,9 @@ declare(strict_types=1);
 
 namespace Test\Unit\Infrastructure\Persistence;
 
-use Domain\Model\User\User;
-use Domain\Model\User\UserId;
-use Infrastructure\Persistence\InMemoryUserRepository;
+use Membership\Domain\Model\User\User;
+use Membership\Domain\Model\User\UserId;
+use Membership\Infrastructure\Persistence\InMemoryUserRepository;
 use Ramsey\Uuid\Uuid;
 
 class InMemoryUserRepositoryTest extends \PHPUnit_Framework_TestCase

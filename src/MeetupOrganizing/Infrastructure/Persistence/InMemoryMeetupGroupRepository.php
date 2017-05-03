@@ -1,11 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace Infrastructure\Persistence;
+namespace MeetupOrganizing\Infrastructure\Persistence;
 
-use Domain\Model\MeetupGroup\MeetupGroup;
-use Domain\Model\MeetupGroup\MeetupGroupId;
-use Domain\Model\MeetupGroup\MeetupGroupRepository;
+use MeetupOrganizing\Domain\Model\MeetupGroup\MeetupGroup;
+use MeetupOrganizing\Domain\Model\MeetupGroup\MeetupGroupId;
+use MeetupOrganizing\Domain\Model\MeetupGroup\MeetupGroupRepository;
 use Ramsey\Uuid\Uuid;
 
 final class InMemoryMeetupGroupRepository implements MeetupGroupRepository

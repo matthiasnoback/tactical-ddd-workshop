@@ -3,9 +3,9 @@ declare(strict_types = 1);
 
 namespace Test\Unit\Infrastructure\Persistence;
 
-use Domain\Model\MeetupGroup\MeetupGroup;
-use Domain\Model\MeetupGroup\MeetupGroupId;
-use Infrastructure\Persistence\InMemoryMeetupGroupRepository;
+use MeetupOrganizing\Domain\Model\MeetupGroup\MeetupGroup;
+use MeetupOrganizing\Domain\Model\MeetupGroup\MeetupGroupId;
+use MeetupOrganizing\Infrastructure\Persistence\InMemoryMeetupGroupRepository;
 use Ramsey\Uuid\Uuid;
 
 class InMemoryMeetupGroupRepositoryTest extends \PHPUnit_Framework_TestCase

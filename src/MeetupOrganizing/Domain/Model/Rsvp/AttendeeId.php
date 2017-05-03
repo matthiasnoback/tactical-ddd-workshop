@@ -1,11 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace Domain\Model\Rsvp;
+namespace MeetupOrganizing\Domain\Model\Rsvp;
 
 use Common\DomainModel\AggregateId;
 
-final class RsvpId
+final class AttendeeId
 {
     use AggregateId;
 }

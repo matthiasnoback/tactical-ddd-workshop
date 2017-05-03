@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace Domain\Model\Meetup;
+namespace MeetupOrganizing\Domain\Model\Meetup;
 
-use Domain\Model\MeetupGroup\MeetupGroup;
-use Domain\Model\MeetupGroup\MeetupGroupId;
+use MeetupOrganizing\Domain\Model\MeetupGroup\MeetupGroup;
+use MeetupOrganizing\Domain\Model\MeetupGroup\MeetupGroupId;
 
 final class Meetup
 {

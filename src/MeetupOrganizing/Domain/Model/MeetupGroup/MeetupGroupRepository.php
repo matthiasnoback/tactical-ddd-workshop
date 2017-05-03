@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Domain\Model\MeetupGroup;
+namespace MeetupOrganizing\Domain\Model\MeetupGroup;
 
 interface MeetupGroupRepository
 {
