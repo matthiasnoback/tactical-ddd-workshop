@@ -33,8 +33,6 @@ final class Meetup
      */
     private $scheduledFor;
 
-    private $rsvps = [];
-
     private function __construct(
         MeetupId $meetupId,
         MeetupGroupId $meetupGroupId,
@@ -47,8 +45,6 @@ final class Meetup
         $this->workingTitle = $workingTitle;
         $this->scheduledFor = $scheduledFor;
         $this->meetupId = $meetupId;
-
-        $this->rsvps[(string)$this->organizerId] = Rsvp::yes($this->organizerId->asUserId());
     }
 
     public static function schedule(
