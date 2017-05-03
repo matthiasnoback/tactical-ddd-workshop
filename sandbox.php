@@ -62,7 +62,7 @@ dump($meetup);
 
 $eventDispatcher->registerSubscriber(MeetupScheduled::class, function (MeetupScheduled $event) use ($userIdInSession, $userIdFactory) {
     $attendeeId = $userIdFactory->createAttendeeId((string)$event->organizerId());
-    $rsvpId = RsvpId::fromString($userIdInSession);
+    $rsvpId = RsvpId::fromString((string)Uuid::uuid4());
     $rsvp = Rsvp::yes($rsvpId, $event->meetupId(), $attendeeId);
     dump($rsvp);
 });
