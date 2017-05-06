@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace Domain\Model\MeetupGroup;
+namespace MeetupOrganizing\Domain\Model\MeetupGroup;
 
-use Domain\Model\User\UserId;
+use MeetupOrganizing\Domain\Model\User\UserId;
 
 final class MeetupGroup
 {
@@ -31,7 +31,7 @@ final class MeetupGroup
     /**
      * @return MeetupGroupId
      */
-    public function meetupGroupId() : MeetupGroupId
+    public function meetupGroupId(): MeetupGroupId
     {
         return $this->meetupGroupId;
     }
@@ -39,7 +39,7 @@ final class MeetupGroup
     /**
      * @return string
      */
-    public function name() : string
+    public function name(): string
     {
         return $this->name;
     }
@@ -49,7 +49,7 @@ final class MeetupGroup
         $this->memberIds[] = $memberId;
     }
 
-    public function memberIds() : array
+    public function memberIds(): array
     {
         return $this->memberIds;
     }

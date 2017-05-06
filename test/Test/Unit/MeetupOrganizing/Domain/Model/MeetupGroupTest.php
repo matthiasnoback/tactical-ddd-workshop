@@ -1,13 +1,13 @@
 <?php
 
-namespace Test\Unit\Domain\Model;
+namespace Test\Unit\MeetupOrganizing\Domain\Model;
 
-use Domain\Model\MeetupGroup\MeetupGroup;
-use Domain\Model\MeetupGroup\MeetupGroupId;
-use Domain\Model\User\UserId;
+use MeetupOrganizing\Domain\Model\MeetupGroup\MeetupGroup;
+use MeetupOrganizing\Domain\Model\MeetupGroup\MeetupGroupId;
+use MeetupOrganizing\Domain\Model\User\UserId;
 use Ramsey\Uuid\Uuid;
 
-class MeetupGroupTest extends \PHPUnit_Framework_TestCase
+final class MeetupGroupTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @test

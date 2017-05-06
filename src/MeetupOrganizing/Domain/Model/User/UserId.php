@@ -1,6 +1,6 @@
 <?php
 
-namespace Domain\Model\User;
+namespace MeetupOrganizing\Domain\Model\User;
 
 use Common\DomainModel\AggregateId;
 

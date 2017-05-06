@@ -3,11 +3,10 @@ declare(strict_types = 1);
 
 use Common\EventDispatcher\EventCliLogger;
 use Common\EventDispatcher\EventDispatcher;
-use Domain\Model\MeetupGroup\MeetupGroup;
-use Domain\Model\User\User;
-use Infrastructure\DomainEvents\Fixtures\DummyDomainEvent;
-use Infrastructure\Persistence\InMemoryMeetupGroupRepository;
-use Infrastructure\Persistence\InMemoryUserRepository;
+use MeetupOrganizing\Domain\Model\MeetupGroup\MeetupGroup;
+use MeetupOrganizing\Domain\Model\User\User;
+use MeetupOrganizing\Infrastructure\Persistence\InMemoryMeetupGroupRepository;
+use MeetupOrganizing\Infrastructure\Persistence\InMemoryUserRepository;
 
 require __DIR__ . '/vendor/autoload.php';
 
@@ -30,4 +29,5 @@ $meetupGroup = new MeetupGroup(
 );
 $meetupGroupRepository->add($meetupGroup);
 
-$eventDispatcher->dispatch(new DummyDomainEvent());
+// dispatch domain events
+//$eventDispatcher->dispatch(new \stdClass());

@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Domain\Model\User;
+namespace MeetupOrganizing\Domain\Model\User;
 
 final class User
 {
@@ -30,7 +30,7 @@ final class User
     /**
      * @return UserId
      */
-    public function userId() : UserId
+    public function userId(): UserId
     {
         return $this->userId;
     }
@@ -38,7 +38,7 @@ final class User
     /**
      * @return string
      */
-    public function name() : string
+    public function name(): string
     {
         return $this->name;
     }
