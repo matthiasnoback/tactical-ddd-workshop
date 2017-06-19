@@ -1,1 +1,0 @@
-- Add an assignment about a more interesting Value Object than we currently have.
