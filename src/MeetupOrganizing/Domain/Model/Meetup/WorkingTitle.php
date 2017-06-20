@@ -14,4 +14,9 @@ final class WorkingTitle
     {
         $this->workingTitle = $workingTitle;
     }
+
+    public function __toString(): string
+    {
+        return $this->workingTitle;
+    }
 }

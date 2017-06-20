@@ -46,13 +46,28 @@ final class MeetupScheduled
         $this->scheduledFor = $scheduledFor;
     }
 
-    public function meetupId()
+    public function meetupId(): MeetupId
     {
         return $this->meetupId;
     }
 
-    public function organizerId()
+    public function organizerId(): OrganizerId
     {
         return $this->organizerId;
+    }
+
+    public function meetupGroupId(): MeetupGroupId
+    {
+        return $this->meetupGroupId;
+    }
+
+    public function workingTitle(): WorkingTitle
+    {
+        return $this->workingTitle;
+    }
+
+    public function scheduledFor(): ScheduledDate
+    {
+        return $this->scheduledFor;
     }
 }

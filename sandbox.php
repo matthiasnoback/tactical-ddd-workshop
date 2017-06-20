@@ -8,13 +8,14 @@ use MeetupOrganizing\Domain\Model\Meetup\Meetup;
 use MeetupOrganizing\Domain\Model\Meetup\MeetupId;
 use MeetupOrganizing\Domain\Model\Meetup\MeetupScheduled;
 use MeetupOrganizing\Domain\Model\Meetup\ScheduledDate;
+use MeetupOrganizing\Domain\Model\Rsvp\RsvpedNo;
+use MeetupOrganizing\Domain\Model\Rsvp\RsvpedYes;
 use MeetupOrganizing\Domain\Model\Rsvp\RsvpId;
 use MeetupOrganizing\Infrastructure\Membership\RemoteUserIdFactory;
 use MeetupOrganizing\Domain\Model\Meetup\WorkingTitle;
 use MeetupOrganizing\Domain\Model\MeetupGroup\MeetupGroup;
 use MeetupOrganizing\Domain\Model\Rsvp\Rsvp;
 use Membership\Domain\Model\User\User;
-use Infrastructure\DomainEvents\Fixtures\DummyDomainEvent;
 use MeetupOrganizing\Infrastructure\Persistence\InMemoryMeetupGroupRepository;
 use Membership\Infrastructure\Persistence\InMemoryUserRepository;
 use Ramsey\Uuid\Uuid;
@@ -25,7 +26,7 @@ $userRepository = new InMemoryUserRepository();
 $meetupGroupRepository = new InMemoryMeetupGroupRepository();
 
 $eventDispatcher = new EventDispatcher();
-$eventDispatcher->subscribeToAllEvents(new EventCliLogger());
+//$eventDispatcher->subscribeToAllEvents(new EventCliLogger());
 
 /*
  * In the "Membership" context
@@ -51,6 +52,33 @@ $meetupGroupRepository->add($meetupGroup);
 $userIdFactory = new RemoteUserIdFactory();
 $organizerId = $userIdFactory->createOrganizerId($userIdInSession);
 
+//dump($meetup); // i.e. persist
+//
+//$eventDispatcher->registerSubscriber(
+//    MeetupScheduled::class,
+//    new RsvpYesForOrganizerWhenMeetupScheduled($userIdFactory)
+//);
+
+$meetups = [];
+
+$eventDispatcher->registerSubscriber(MeetupScheduled::class, function(MeetupScheduled $event) use (&$meetups) {
+    $meetups[(string)$event->meetupId()] = [
+        'title' => (string)$event->workingTitle(),
+        'numberOfAttendees' => 0
+    ];
+});
+
+$eventDispatcher->registerSubscriber(RsvpedYes::class, function (RsvpedYes $event) use (&$meetups) {
+    $currentNumberOfAttendees = $meetups[(string)$event->meetupId()]['numberOfAttendees'];
+    $meetups[(string)$event->meetupId()]['numberOfAttendees'] = $currentNumberOfAttendees + 1;
+    dump($meetups);
+});
+$eventDispatcher->registerSubscriber(RsvpedNo::class, function (RsvpedNo $event) use (&$meetups) {
+    $currentNumberOfAttendees = $meetups[(string)$event->meetupId()]['numberOfAttendees'];
+    $meetups[(string)$event->meetupId()]['numberOfAttendees'] = $currentNumberOfAttendees - 1;
+    dump($meetups);
+});
+
 $meetupId = MeetupId::fromString((string)Uuid::uuid4());
 $meetup = Meetup::schedule(
     $meetupId,
@@ -59,13 +87,20 @@ $meetup = Meetup::schedule(
     new WorkingTitle('May Meetup'),
     ScheduledDate::fromDateTime(new \DateTimeImmutable('2017-05-05 19:00'))
 );
-dump($meetup); // i.e. persist
 
-$eventDispatcher->registerSubscriber(
-    MeetupScheduled::class,
-    new RsvpYesForOrganizerWhenMeetupScheduled($userIdFactory)
-);
+$attendeeId = $userIdFactory->createAttendeeId($userIdInSession);
+$rsvpId = RsvpId::fromString((string)Uuid::uuid4());
+$rsvp = Rsvp::yes($rsvpId, $meetupId, $attendeeId);
 
-foreach ($meetup->recordedEvents() as $event) {
-    $eventDispatcher->dispatch($event);
-}
+$eventDispatcher->dispatchAll($meetup->popRecordedEvents());
+$eventDispatcher->dispatchAll($rsvp->popRecordedEvents());
+
+//$meetup->cancel();
+//
+//$events = $meetup->popRecordedEvents();
+//
+//dump($events);
+//
+//$reconstitutedMeetup = Meetup::reconstitute($events);
+//
+//\PHPUnit_Framework_Assert::assertEquals($meetup, $reconstitutedMeetup);
