@@ -8,6 +8,7 @@ use MeetupOrganizing\Domain\Model\Meetup\Meetup;
 use MeetupOrganizing\Domain\Model\Meetup\MeetupId;
 use MeetupOrganizing\Domain\Model\Meetup\MeetupScheduled;
 use MeetupOrganizing\Domain\Model\Meetup\ScheduledDate;
+use MeetupOrganizing\Domain\Model\Rsvp\AttendeeId;
 use MeetupOrganizing\Domain\Model\Rsvp\RsvpedNo;
 use MeetupOrganizing\Domain\Model\Rsvp\RsvpedYes;
 use MeetupOrganizing\Domain\Model\Rsvp\RsvpId;
@@ -61,11 +62,29 @@ $organizerId = $userIdFactory->createOrganizerId($userIdInSession);
 
 $meetups = [];
 
-$eventDispatcher->registerSubscriber(MeetupScheduled::class, function(MeetupScheduled $event) use (&$meetups) {
+$eventDispatcher->registerSubscriber(MeetupScheduled::class, function (MeetupScheduled $event) use (&$meetups) {
     $meetups[(string)$event->meetupId()] = [
         'title' => (string)$event->workingTitle(),
         'numberOfAttendees' => 0
     ];
+});
+
+$numberOfRsvpsPerAttendee = [];
+
+$eventDispatcher->registerSubscriber(RsvpedYes::class, function (RsvpedYes $event) use (&$numberOfRsvpsPerAttendee) {
+    if (!isset($numberOfRsvpsPerAttendee[(string)$event->attendeeId()])) {
+        $numberOfRsvpsPerAttendee[(string)$event->attendeeId()] = 0;
+    }
+
+    $numberOfRsvpsPerAttendee[(string)$event->attendeeId()] += 1;
+});
+
+$eventDispatcher->registerSubscriber(RsvpedNo::class, function (RsvpedNo $event) use (&$numberOfRsvpsPerAttendee) {
+    if (!isset($numberOfRsvpsPerAttendee[(string)$event->attendeeId()])) {
+        $numberOfRsvpsPerAttendee[(string)$event->attendeeId()] = 0;
+    } else {
+        $numberOfRsvpsPerAttendee[(string)$event->attendeeId()] -= 1;
+    }
 });
 
 $eventDispatcher->registerSubscriber(RsvpedYes::class, function (RsvpedYes $event) use (&$meetups) {
@@ -88,12 +107,27 @@ $meetup = Meetup::schedule(
     ScheduledDate::fromDateTime(new \DateTimeImmutable('2017-05-05 19:00'))
 );
 
+function randomMeetupId(): MeetupId {
+    return MeetupId::fromString((string)Uuid::uuid4());
+}
+function nextRsvpId(): RsvpId {
+    return RsvpId::fromString((string)Uuid::uuid4());
+}
+function randomAttendeeId(): AttendeeId {
+    return AttendeeId::fromString((string)Uuid::uuid4());
+}
+
 $attendeeId = $userIdFactory->createAttendeeId($userIdInSession);
 $rsvpId = RsvpId::fromString((string)Uuid::uuid4());
-$rsvp = Rsvp::yes($rsvpId, $meetupId, $attendeeId);
+
+$rsvpOrganizer = Rsvp::yes(nextRsvpId(), $meetupId, $attendeeId);
+$rsvpOrganizerForOtherMeetup = Rsvp::yes(nextRsvpId(), randomMeetupId(), $attendeeId);
+$rsvpOtherAttendeeForSameMeetup = Rsvp::yes(nextRsvpId(), $meetupId, randomAttendeeId());
 
 $eventDispatcher->dispatchAll($meetup->popRecordedEvents());
-$eventDispatcher->dispatchAll($rsvp->popRecordedEvents());
+$eventDispatcher->dispatchAll($rsvpOrganizer->popRecordedEvents());
+$eventDispatcher->dispatchAll($rsvpOrganizerForOtherMeetup->popRecordedEvents());
+$eventDispatcher->dispatchAll($rsvpOtherAttendeeForSameMeetup->popRecordedEvents());
 
 //$meetup->cancel();
 //
@@ -104,3 +138,5 @@ $eventDispatcher->dispatchAll($rsvp->popRecordedEvents());
 //$reconstitutedMeetup = Meetup::reconstitute($events);
 //
 //\PHPUnit_Framework_Assert::assertEquals($meetup, $reconstitutedMeetup);
+
+dump($numberOfRsvpsPerAttendee);
