@@ -3,11 +3,14 @@ declare(strict_types=1);
 
 namespace MeetupOrganizing\Domain\Model\Meetup;
 
+use Common\DomainModel\AggregateRoot;
 use MeetupOrganizing\Domain\Model\MeetupGroup\MeetupGroupId;
 use MeetupOrganizing\Domain\Model\User\UserId;
 
 final class Meetup
 {
+    use AggregateRoot;
+
     /**
      * @var MeetupId
      */
@@ -62,6 +65,10 @@ final class Meetup
         ScheduledDate $scheduledFor,
         Location $location
     ): Meetup {
-        return new self($meetupId, $meetupGroupId, $organizerId, $workingTitle, $scheduledFor, $location);
+        $meetup = new self($meetupId, $meetupGroupId, $organizerId, $workingTitle, $scheduledFor, $location);
+
+        $meetup->recordThat(new MeetupScheduled($meetupId, $meetupGroupId, $organizerId, $workingTitle, $scheduledFor));
+
+        return $meetup;
     }
 }
