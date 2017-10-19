@@ -33,6 +33,11 @@ final class Meetup
      */
     private $scheduledFor;
 
+    /**
+     * @var Location
+     */
+    private $location;
+
     private $rsvps = [];
 
     private function __construct(
@@ -40,13 +45,15 @@ final class Meetup
         MeetupGroupId $meetupGroupId,
         UserId $organizerId,
         Title $title,
-        ScheduledDate $scheduledFor
+        ScheduledDate $scheduledFor,
+        Location $location
     ) {
         $this->meetupGroupId = $meetupGroupId;
         $this->organizerId = $organizerId;
         $this->title = $title;
         $this->scheduledFor = $scheduledFor;
         $this->meetupId = $meetupId;
+        $this->location = $location;
 
         $this->rsvps[(string)$this->organizerId] = Rsvp::yes();
     }
@@ -56,8 +63,9 @@ final class Meetup
         MeetupGroupId $meetupGroupId,
         UserId $organizerId,
         Title $workingTitle,
-        ScheduledDate $scheduledFor
+        ScheduledDate $scheduledFor,
+        Location $location
     ): Meetup {
-        return new self($meetupId, $meetupGroupId, $organizerId, $workingTitle, $scheduledFor);
+        return new self($meetupId, $meetupGroupId, $organizerId, $workingTitle, $scheduledFor, $location);
     }
 }
