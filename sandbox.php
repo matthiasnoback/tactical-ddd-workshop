@@ -1,5 +1,5 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
 
 use Common\EventDispatcher\EventCliLogger;
 use Common\EventDispatcher\EventDispatcher;
@@ -11,6 +11,8 @@ use MeetupOrganizing\Domain\Model\Meetup\MeetupId;
 use MeetupOrganizing\Domain\Model\Meetup\ScheduledDate;
 use MeetupOrganizing\Domain\Model\Meetup\Title;
 use MeetupOrganizing\Domain\Model\MeetupGroup\MeetupGroup;
+use MeetupOrganizing\Domain\Model\Rsvp\Rsvp;
+use MeetupOrganizing\Domain\Model\Rsvp\RsvpId;
 use MeetupOrganizing\Domain\Model\User\User;
 use MeetupOrganizing\Infrastructure\Persistence\InMemoryMeetupGroupRepository;
 use MeetupOrganizing\Infrastructure\Persistence\InMemoryUserRepository;
@@ -40,8 +42,9 @@ $meetupGroupRepository->add($meetupGroup);
 // dispatch domain events
 //$eventDispatcher->dispatch(new \stdClass());
 
+$meetupId = MeetupId::fromString((string)Uuid::uuid4());
 $meetup = Meetup::schedule(
-    MeetupId::fromString((string)Uuid::uuid4()),
+    $meetupId,
     $meetupGroup->meetupGroupId(),
     $user->userId(),
     new Title('PHP Europe October meetup'),
@@ -52,3 +55,10 @@ $meetup = Meetup::schedule(
     ))
 );
 dump($meetup);
+
+$rsvp = Rsvp::yes(
+    RsvpId::fromString((string)Uuid::uuid4()),
+    $meetupId,
+    $user->userId()
+);
+dump($rsvp);
